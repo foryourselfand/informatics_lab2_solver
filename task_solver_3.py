@@ -4,7 +4,7 @@ from pprint import pprint
 from input_tasks_getter import InputTasksGetter
 
 
-class ThirdTaskSolver:
+class TaskSolverThird:
     def __init__(self):
         self.X: Dict[Union[str, int], Union[str, int]] = {1: 'A',
                                                           2: 'C',
@@ -19,6 +19,12 @@ class ThirdTaskSolver:
         self.X['A'], self.X['C'] = input_task
         self.solve_first_six()
         self.solve_last_six()
+        # pprint(self.X)
+
+        return self.X
+
+    def get_x(self) -> Dict[Union[str, int], Union[str, int]]:
+        return self.X
 
     def solve_first_six(self):
         for i in range(1, 7):
@@ -85,7 +91,7 @@ def main():
     input_tasks_getter = InputTasksGetter()
     input_tasks = input_tasks_getter.get_input_tasks()
 
-    third_task_solver = ThirdTaskSolver()
+    third_task_solver = TaskSolverThird()
     third_task_solver.solve_task(input_tasks[3])
 
     # third_task_solver.solve_task((2187, 30327))
