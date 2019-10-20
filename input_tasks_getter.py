@@ -2,7 +2,7 @@ from typing import Dict, Tuple
 from pprint import pprint
 
 
-class InputTaskGetter:
+class InputTasksGetter:
     def __init__(self):
         self.file_name = 'input_tasks.txt'
 
@@ -24,8 +24,8 @@ class InputTaskGetter:
 
 
 def main():
-    input_task_getter = InputTaskGetter()
-    input_tasks = input_task_getter.get_input_tasks()
+    input_tasks_getter = InputTasksGetter()
+    input_tasks = input_tasks_getter.get_input_tasks()
     pprint(input_tasks)
     print(input_tasks[3])
 
