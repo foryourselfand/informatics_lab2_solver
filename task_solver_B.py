@@ -1,20 +1,23 @@
+from pprint import pprint
 from typing import Dict, Tuple, List
 
 from input_tasks_getter import InputTasksGetter
-from task_solver_3 import TaskSolverThird
+from task_solver_X import TaskSolverX
 from helper import get_with_spaces
 
 
-class TaskSolverForth:
+class TaskSolverB:
     def __init__(self):
         self.B: Dict = dict()
 
     def solve_task(self, x: Dict):
-        print('Task #4')
         for i in range(1, 7):
-            self.solve_single(x, i)
+            self.solve_first_six(x, i)
 
-    def solve_single(self, x: Dict, index):
+    def get_b(self):
+        return self.B
+
+    def solve_first_six(self, x: Dict, index):
         b_index = f'B{index}(2)'
         x_index = f'X{index}(10)'
 
@@ -30,17 +33,22 @@ class TaskSolverForth:
         full_line = ' = '.join(expressions)
         print(full_line)
 
+    def solve_last_six(self, index):
+        pass
+
 
 def main():
     input_tasks_getter = InputTasksGetter()
-    input_tasks = input_tasks_getter.get_input_tasks()
+    # input_task = input_tasks_getter.get_input_task()
+    input_task = (2187, 30327)
 
-    task_solver_third = TaskSolverThird()
-    task_solver_third.solve_task(input_tasks[3])
-    x: Dict = task_solver_third.get_x()
+    task_solver_x = TaskSolverX()
+    task_solver_x.solve_task(input_task)
+    x: Dict = task_solver_x.get_x()
+    print()
 
-    task_solver_forth = TaskSolverForth()
-    task_solver_forth.solve_task(x)
+    solver_forth_b = TaskSolverB()
+    solver_forth_b.solve_task(x)
 
 
 if __name__ == '__main__':
