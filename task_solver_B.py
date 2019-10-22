@@ -13,6 +13,8 @@ class TaskSolverB:
     def solve_task(self, x: Dict):
         for i in range(1, 7):
             self.solve_first_six(x, i)
+        for i in range(7, 13):
+            self.solve_last_six(x, i)
 
     def get_b(self):
         return self.B
@@ -33,8 +35,13 @@ class TaskSolverB:
         full_line = ' = '.join(expressions)
         print(full_line)
 
-    def solve_last_six(self, index):
-        pass
+    def solve_last_six(self, x: Dict, index):
+        b_index_big = f'B{index}(2)'
+        b_index_small = f'-B{index - 6}(2)'
+
+        expressions = [b_index_big, b_index_small]
+        full_line = ' = '.join(expressions)
+        print(full_line)
 
 
 def main():
