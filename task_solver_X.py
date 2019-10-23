@@ -15,6 +15,7 @@ class TaskSolverX:
         self.signs = ['+', '-']
 
     def solve_task(self, input_task: Tuple[int, int]):
+        print('Task #3')
         self.X['A'], self.X['C'] = input_task
         self.solve_first_six()
         self.solve_last_six()

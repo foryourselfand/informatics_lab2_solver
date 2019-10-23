@@ -11,6 +11,7 @@ class TaskSolverB:
         self.B: Dict = dict()
 
     def solve_task(self, x: Dict):
+        print('Task #4; Task #5')
         for i in range(1, 7):
             self.solve_first_six(x, i)
         for i in range(7, 13):

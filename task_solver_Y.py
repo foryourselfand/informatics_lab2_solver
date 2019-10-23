@@ -12,8 +12,10 @@ class TaskSolverY:
         self.Y: Dict = dict()
 
     def solve_task(self, x: Dict, b: Dict):
+        print('Task #6')
         print(f'ОДЗ = [2^15; 2^15 - 1] = [{2 ** 15}; {2 ** 15 - 1}]')
 
+        print('Task #7')
         for index in range(1, len(b) + 1):
             self.solve_single(x[index], b[index], index)
 
