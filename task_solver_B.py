@@ -3,7 +3,7 @@ from typing import Dict, Tuple, List
 
 from input_tasks_getter import InputTasksGetter
 from task_solver_X import TaskSolverX
-from helper import get_with_spaces
+from helper import get_with_spaces, get_inverse, get_with_leading_zeroes
 
 
 class TaskSolverB:
@@ -36,18 +36,29 @@ class TaskSolverB:
         print(full_line)
 
     def solve_last_six(self, x: Dict, index):
+        small_index = index - 6
         b_index_big = f'B{index}(2)'
-        b_index_small = f'-B{index - 6}(2)'
+        b_index_small = f'-B{small_index}(2)'
 
-        expressions = [b_index_big, b_index_small]
+        temp_number = x[small_index] - 1
+        elem_base = bin(temp_number)[2:]
+
+        elem_zeroes = get_with_leading_zeroes(elem_base)
+
+        elem_inverse = get_inverse(elem_zeroes)
+        self.B[index] = elem_inverse
+        elem_spaces = get_with_spaces(elem_inverse)
+        elem_final = f'{elem_spaces}(2)'
+
+        expressions = [b_index_big, b_index_small, elem_final]
         full_line = ' = '.join(expressions)
         print(full_line)
 
 
 def main():
     input_tasks_getter = InputTasksGetter()
-    # input_task = input_tasks_getter.get_input_task()
-    input_task = (2187, 30327)
+    input_task = input_tasks_getter.get_input_task(7)
+    # input_task = (2187, 30327)
 
     task_solver_x = TaskSolverX()
     task_solver_x.solve_task(input_task)
@@ -56,6 +67,8 @@ def main():
 
     solver_forth_b = TaskSolverB()
     solver_forth_b.solve_task(x)
+    b: Dict = solver_forth_b.get_b()
+    pprint(b)
 
 
 if __name__ == '__main__':

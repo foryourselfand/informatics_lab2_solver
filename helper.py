@@ -29,7 +29,7 @@ def get_inverse(string: str) -> str:
 
 def main():
     base = '011001110111'
-    print('base:', base)
+    print('base:       ', base)
 
     with_zeroes = get_with_leading_zeroes(base)
     print('with_zeroes:', with_zeroes)
