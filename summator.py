@@ -1,73 +1,91 @@
-from typing import Dict
+from typing import Dict, Tuple
 from helper import get_with_leading_zeroes, get_inverse
 
 
 class Summator:
     def __init__(self):
-        self.__flags: Dict[str, int] = dict()
-        self.__keys = ['SF', 'ZF', 'PF', 'AF', 'CF', 'OF']
+        self.SF = self.ZF = self.PF = self.AF = self.CF = self.OF = -1
 
     def __refresh_flags(self):
-        self.__flags = {key: 0 for key in self.__keys}
+        self.SF = 0
+        self.ZF = 1
+        self.PF = 1
+        self.AF = 0
+        self.CF = 0
+        self.OF = 0
 
-    def get_sum(self, input_number_first: str, input_number_second: str) -> str:
+    def get_sum(self, input_number_first: str, input_number_second: str) -> Tuple[str, str]:
         self.__refresh_flags()
         number_first_with_zeroes = get_with_leading_zeroes(input_number_first)
         number_second_with_zeroes = get_with_leading_zeroes(input_number_second)
+
+        number_first_sign = int(number_first_with_zeroes[0])
+        number_second_sign = int(number_second_with_zeroes[0])
 
         number_first = number_first_with_zeroes[::-1]
         number_second = number_second_with_zeroes[::-1]
 
         result = ''
 
-        previous_rank = 0
+        rank_out = 0
+        rank_previous = 0
         for first_char, second_char, index in zip(number_first, number_second, range(len(number_first))):
             first_int = int(first_char)
             second_int = int(second_char)
             # print('first_int:', first_int)
             # print('second_int:', second_int)
 
-            temp_sum = first_int + second_int + previous_rank
+            temp_sum = first_int + second_int + rank_previous
             # print('temp_sum:', temp_sum)
 
-            to_next_rank, to_result = divmod(temp_sum, 2)
-            # print('to_next_rank:', to_next_rank)
+            rank_next, to_result = divmod(temp_sum, 2)
+            # print('rank_next:', rank_next)
             # print('to_result:', to_result)
             result += str(to_result)
 
-            previous_rank = to_next_rank
-            # print()
-        final_result = result[::-1]
-        # print('final_result:', final_result)
+            rank_previous = rank_next
 
-        return final_result
+            if self.ZF == 1 and to_result == 1:
+                self.ZF = 0
 
-    # @staticmethod
-    # def get_in_additional_code_from_string(string: str) -> str:
-    #     string_with_leading_zeroes = get_with_leading_zeroes(string)
-    #     string_inverse = get_inverse(string_with_leading_zeroes)
-    #
-    #     one_with_leading_zeroes = get_with_leading_zeroes('1')
-    #
-    #     result = Summator.get_sum(string_inverse, one_with_leading_zeroes)
-    #
-    #     return result
+            if index < 8:
+                self.PF = (self.PF + to_result) % 2
+
+            if index == 3:
+                if rank_next == 1:
+                    self.AF = 1
+
+            if index == 15:
+                self.SF = to_result
+                rank_out = rank_next
+                if rank_next == 1:
+                    self.CF = 1
+
+                if number_first_sign == number_second_sign and self.SF != number_first_sign:
+                    self.OF = 1
+
+        full_result = result[::-1]
+        # print('full_result:', full_result)
+
+        return full_result, str(rank_out)
+
+    def __str__(self):
+        flags = []
+        for key, value in self.__dict__.items():
+            flags.append(f'{key} = {value}')
+        result = '\t'.join(flags)
+        return result
 
 
 def main():
     summator = Summator()
 
-    first_numbers = '0000100010001011', '0111011001110111'
-    first_result_fact = '0111111100000010'
-    first_result_temp = summator.get_sum(*first_numbers)
-    print('first_result_temp:', first_result_temp)
-    print(first_result_fact == first_result_temp)
+    numbers = '1010101000111100', '0110101001100100'
+    result, rank_out = summator.get_sum(*numbers)
+    print('result:', result)
+    print('rank_out:', rank_out)
 
-    second_numbers = '0000100010001011', '1000100110001001'
-    second_result_fact = '1001001000010100'
-    second_result_temp = summator.get_sum(*second_numbers)
-    print('second_result_temp:', second_result_temp)
-    print(second_result_fact == second_result_temp)
+    print(summator)
 
 
 if __name__ == '__main__':
