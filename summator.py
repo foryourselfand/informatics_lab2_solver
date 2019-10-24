@@ -32,15 +32,10 @@ class Summator:
         for first_char, second_char, index in zip(number_first, number_second, range(len(number_first))):
             first_int = int(first_char)
             second_int = int(second_char)
-            # print('first_int:', first_int)
-            # print('second_int:', second_int)
 
             temp_sum = first_int + second_int + rank_previous
-            # print('temp_sum:', temp_sum)
 
             rank_next, to_result = divmod(temp_sum, 2)
-            # print('rank_next:', rank_next)
-            # print('to_result:', to_result)
             result += str(to_result)
 
             rank_previous = rank_next
@@ -65,7 +60,6 @@ class Summator:
                     self.OF = 1
 
         full_result = result[::-1]
-        # print('full_result:', full_result)
 
         return full_result, str(rank_out)
 
