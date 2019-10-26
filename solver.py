@@ -13,6 +13,7 @@ def main():
 
     input_tasks_getter = InputTasksGetter()
     input_task = input_tasks_getter.get_input_task(variant)
+    print(f'Variant #{variant}; Input Numbers: {input_task}')
 
     task_solver_x = TaskSolverX()
     task_solver_x.solve_task(input_task)
